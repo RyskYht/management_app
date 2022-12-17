@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  school: one
+  family: one
+  title: MyString
+  month: 2022-12-16
+  amount: 1
+  deadline_date: 2022-12-16
+  payment_date: 2022-12-16
+
+two:
+  school: two
+  family: two
+  title: MyString
+  month: 2022-12-16
+  amount: 1
+  deadline_date: 2022-12-16
+  payment_date: 2022-12-16

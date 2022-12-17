@@ -1,0 +1,52 @@
+<%= form_with(model: tuition) do |form| %>
+  <% if tuition.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(tuition.errors.count, "error") %> prohibited this tuition from being saved:</h2>
+
+      <ul>
+        <% tuition.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :school_id, style: "display: block" %>
+    <%= form.text_field :school_id %>
+  </div>
+
+  <div>
+    <%= form.label :family_id, style: "display: block" %>
+    <%= form.text_field :family_id %>
+  </div>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :month, style: "display: block" %>
+    <%= form.date_field :month %>
+  </div>
+
+  <div>
+    <%= form.label :amount, style: "display: block" %>
+    <%= form.number_field :amount %>
+  </div>
+
+  <div>
+    <%= form.label :deadline_date, style: "display: block" %>
+    <%= form.date_field :deadline_date %>
+  </div>
+
+  <div>
+    <%= form.label :payment_date, style: "display: block" %>
+    <%= form.date_field :payment_date %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

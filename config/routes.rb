@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :tuitions, :tasks, :lessons, :students, :announcements, :rooms, :families, :teachers, :schools, :managers
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  get "/", to: "home#top"
+  get "login", to: "home#login_form"
+  post "login", to: "home#login"
+  get "logout", to: "home#logout"
+  get "admin", to: "home#dashboard"  
 end

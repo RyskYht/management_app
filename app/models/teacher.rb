@@ -1,0 +1,8 @@
+class Teacher < ApplicationRecord
+  has_secure_password
+  
+  belongs_to :school
+  has_many :lesson_teachers, dependent: :destroy
+  has_many :lessons, through: :lesson_teachers
+  has_many :tasks, dependent: :destroy
+end

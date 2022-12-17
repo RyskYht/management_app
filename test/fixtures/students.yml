@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  school: one
+  family: one
+  login_id: MyString
+  password_digest: MyString
+  name: MyString
+  email: MyString
+  tel: MyString
+  birthday: 2022-12-16
+  school_name: MyString
+  grade: MyString
+  admission_date: 2022-12-16
+  expulsion_date: 2022-12-16
+  memo: MyText
+
+two:
+  school: two
+  family: two
+  login_id: MyString
+  password_digest: MyString
+  name: MyString
+  email: MyString
+  tel: MyString
+  birthday: 2022-12-16
+  school_name: MyString
+  grade: MyString
+  admission_date: 2022-12-16
+  expulsion_date: 2022-12-16
+  memo: MyText

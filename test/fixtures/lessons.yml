@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  school: one
+  room: one
+  name: MyString
+  start: 2022-12-16 05:19:01
+  end: 2022-12-16 05:19:01
+  content: MyText
+  hourly_pay: 1
+  monthly_pay: 1
+  month: 2022-12-16
+
+two:
+  school: two
+  room: two
+  name: MyString
+  start: 2022-12-16 05:19:01
+  end: 2022-12-16 05:19:01
+  content: MyText
+  hourly_pay: 1
+  monthly_pay: 1
+  month: 2022-12-16

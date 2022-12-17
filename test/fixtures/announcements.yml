@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  school: one
+  start: 2022-12-16 05:12:52
+  end: 2022-12-16 05:12:52
+  title: MyString
+  content: MyText
+
+two:
+  school: two
+  start: 2022-12-16 05:12:52
+  end: 2022-12-16 05:12:52
+  title: MyString
+  content: MyText
