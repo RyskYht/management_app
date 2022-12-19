@@ -3,7 +3,9 @@ class FamiliesController < ApplicationController
 
   # GET /families or /families.json
   def index
-    @families = Family.all
+    if session[:user_type] == "school"
+      @families = Family.where(school_id: session[:user_id])
+    end
   end
 
   # GET /families/1 or /families/1.json
@@ -23,38 +25,26 @@ class FamiliesController < ApplicationController
   def create
     @family = Family.new(family_params)
 
-    respond_to do |format|
-      if @family.save
-        format.html { redirect_to family_url(@family), notice: "Family was successfully created." }
-        format.json { render :show, status: :created, location: @family }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @family.errors, status: :unprocessable_entity }
-      end
+    if @family.save
+      redirect_to families_url, notice: "登録が完了しました。"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /families/1 or /families/1.json
   def update
-    respond_to do |format|
-      if @family.update(family_params)
-        format.html { redirect_to family_url(@family), notice: "Family was successfully updated." }
-        format.json { render :show, status: :ok, location: @family }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @family.errors, status: :unprocessable_entity }
-      end
+    if @family.update(family_params)
+      redirect_to families_url, notice: "情報を編集しました"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /families/1 or /families/1.json
   def destroy
     @family.destroy
-
-    respond_to do |format|
-      format.html { redirect_to families_url, notice: "Family was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to families_url, notice: "削除しました。"
   end
 
   private

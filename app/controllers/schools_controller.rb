@@ -3,7 +3,9 @@ class SchoolsController < ApplicationController
 
   # GET /schools or /schools.json
   def index
-    @schools = School.all
+    if session[:user_type] == "manager"
+      @schools = School.where(manager_id: session[:user_id])
+    end
   end
 
   # GET /schools/1 or /schools/1.json
@@ -23,38 +25,26 @@ class SchoolsController < ApplicationController
   def create
     @school = School.new(school_params)
 
-    respond_to do |format|
-      if @school.save
-        format.html { redirect_to school_url(@school), notice: "School was successfully created." }
-        format.json { render :show, status: :created, location: @school }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @school.errors, status: :unprocessable_entity }
-      end
+    if @school.save
+      redirect_to schools_url, notice: "登録が完了しました。"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /schools/1 or /schools/1.json
   def update
-    respond_to do |format|
-      if @school.update(school_params)
-        format.html { redirect_to school_url(@school), notice: "School was successfully updated." }
-        format.json { render :show, status: :ok, location: @school }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @school.errors, status: :unprocessable_entity }
-      end
+    if @school.update(school_params)
+      redirect_to schools_url, notice: "情報を編集しました"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /schools/1 or /schools/1.json
   def destroy
     @school.destroy
-
-    respond_to do |format|
-      format.html { redirect_to schools_url, notice: "School was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to schools_url, notice: "削除しました。"
   end
 
   private

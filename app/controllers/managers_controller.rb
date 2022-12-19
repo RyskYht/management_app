@@ -23,38 +23,30 @@ class ManagersController < ApplicationController
   def create
     @manager = Manager.new(manager_params)
 
-    respond_to do |format|
-      if @manager.save
-        format.html { redirect_to manager_url(@manager), notice: "Manager was successfully created." }
-        format.json { render :show, status: :created, location: @manager }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @manager.errors, status: :unprocessable_entity }
-      end
+    if @manager.save
+      session[:user_type] = "manager"
+      session[:user_id] = @manager.id
+      redirect_to "/dashboard", notice: "登録が完了しました。ログイン状態です。"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /managers/1 or /managers/1.json
   def update
-    respond_to do |format|
-      if @manager.update(manager_params)
-        format.html { redirect_to manager_url(@manager), notice: "Manager was successfully updated." }
-        format.json { render :show, status: :ok, location: @manager }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @manager.errors, status: :unprocessable_entity }
-      end
+    if @manager.update(manager_params)
+      redirect_to @manager, notice: "情報を編集しました"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /managers/1 or /managers/1.json
   def destroy
     @manager.destroy
-
-    respond_to do |format|
-      format.html { redirect_to managers_url, notice: "Manager was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    session[:user_id] = nil
+    session[:user_type] = nil
+    redirect_to "/", notice: "削除しました。"
   end
 
   private

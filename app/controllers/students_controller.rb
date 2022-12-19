@@ -3,7 +3,13 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
-    @students = Student.all
+    if session[:user_type] == "school"
+      @students = Student.where(school_id: session[:user_id])
+    end
+  end
+  
+  def family_index
+    @students = Student.where(family_id: params[:family_id])
   end
 
   # GET /students/1 or /students/1.json
@@ -23,38 +29,26 @@ class StudentsController < ApplicationController
   def create
     @student = Student.new(student_params)
 
-    respond_to do |format|
-      if @student.save
-        format.html { redirect_to student_url(@student), notice: "Student was successfully created." }
-        format.json { render :show, status: :created, location: @student }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
-      end
+    if @student.save
+      redirect_to "/students", notice: "登録が完了しました。"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /students/1 or /students/1.json
   def update
-    respond_to do |format|
-      if @student.update(student_params)
-        format.html { redirect_to student_url(@student), notice: "Student was successfully updated." }
-        format.json { render :show, status: :ok, location: @student }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
-      end
+    if @student.update(teacher_params)
+      redirect_to "/students", notice: "情報を編集しました"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /students/1 or /students/1.json
   def destroy
     @student.destroy
-
-    respond_to do |format|
-      format.html { redirect_to students_url, notice: "Student was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to "/students", notice: "削除しました。"
   end
 
   private
