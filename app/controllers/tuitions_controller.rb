@@ -3,7 +3,7 @@ class TuitionsController < ApplicationController
 
   # GET /tuitions or /tuitions.json
   def index
-    @tuitions = Tuition.all
+    @tuitions = Tuition.where(school_id: get_school_id)
   end
 
   # GET /tuitions/1 or /tuitions/1.json
@@ -23,38 +23,26 @@ class TuitionsController < ApplicationController
   def create
     @tuition = Tuition.new(tuition_params)
 
-    respond_to do |format|
-      if @tuition.save
-        format.html { redirect_to tuition_url(@tuition), notice: "Tuition was successfully created." }
-        format.json { render :show, status: :created, location: @tuition }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @tuition.errors, status: :unprocessable_entity }
-      end
+    if @tuition.save
+      redirect_to tuitions_url, notice: "登録が完了しました。"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /tuitions/1 or /tuitions/1.json
   def update
-    respond_to do |format|
-      if @tuition.update(tuition_params)
-        format.html { redirect_to tuition_url(@tuition), notice: "Tuition was successfully updated." }
-        format.json { render :show, status: :ok, location: @tuition }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @tuition.errors, status: :unprocessable_entity }
-      end
+    if @tuition.update(tuition_params)
+      redirect_to tuitions_url, notice: "情報を編集しました"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /tuitions/1 or /tuitions/1.json
   def destroy
     @tuition.destroy
-
-    respond_to do |format|
-      format.html { redirect_to tuitions_url, notice: "Tuition was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to tuitions_url, notice: "削除しました。"
   end
 
   private

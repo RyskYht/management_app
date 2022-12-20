@@ -3,9 +3,7 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
-    if session[:user_type] == "school"
-      @students = Student.where(school_id: session[:user_id])
-    end
+    @students = Student.where(school_id: get_school_id)
   end
   
   def family_index

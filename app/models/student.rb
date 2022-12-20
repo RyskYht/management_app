@@ -3,9 +3,9 @@ class Student < ApplicationRecord
   
   belongs_to :school
   belongs_to :family
-  has_many :lesson_students, dependent: :destroy
+  has_many :lesson_students, dependent: :delete_all
   has_many :lessons, through: :lesson_students
-  has_many :announcement_students, dependent: :destroy
+  has_many :announcement_students, dependent: :delete_all
   has_many :announcements, through: :announcement_students
-  has_many :tasks, dependent: :destroy
+  has_many :tasks, dependent: :delete_all
 end

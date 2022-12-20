@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   post    "login", to: "home#login"
   get     "logout", to: "home#logout"
   get     "dashboard", to: "home#dashboard"
+  get     "report", to: "home#report"
+  get     "payslip", to: "home#payslip"
+  
+  post    "/managers/:id/login", to: "managers#manager_login"
   
   get     "/students", to: "students#index"
   get     "/students/:family_id", to: "students#family_index"
@@ -14,6 +18,5 @@ Rails.application.routes.draw do
   get     "/students/:family_id/:id", to: "students#show"
   get     "/students/:family_id/:id/edit", to: "students#edit"
   patch   "/students/:family_id/:id", to: "students#update"
-  put     "/students/:family_id/:id", to: "students#update"
   delete  "/students/:family_id/:id", to: "students#destroy"
 end

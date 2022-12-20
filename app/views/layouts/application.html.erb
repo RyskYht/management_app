@@ -16,18 +16,7 @@
       <div class="header">
         <div class="header-logo">
           <% if @current_user %>
-            <% if session[:user_type] == "admin" %>
-              <%= link_to("hogehoge", "/admin") %>
-            <% end %>
-            <% if session[:user_type] == "school" %>
-              <%= link_to("hogehoge", "/schools/#{@current_user.id}/dashboard") %>
-            <% end %>
-            <% if session[:user_type] == "teacher" %>
-              <%= link_to("hogehoge", "/teachers/#{@current_user.id}/dashboard") %>
-            <% end %>
-            <% if session[:user_type] == "student" %>
-              <%= link_to("hogehoge", "/teachers/#{@current_user.id}/dashboard") %>
-            <% end %>
+            <%= link_to("hogehoge", "/dashboard") %>
           <% else %>
             <%= link_to("hogehoge", "/") %>
           <% end %>
@@ -55,31 +44,47 @@
         <% if @current_user %>
           <div class="side-menus">
             <h2>メニュー</h2>
-            <% if session[:user_type] == "admin" %>
-              <ul>
-                <li>
-                  <%= link_to("ダッシュボード", "/admin") %>
-                </li>
+            <ul>
+              <% case session[:user_type] %>
+                <% when "manager" %>
+                  <li>
+                    <%= link_to("登録情報", "/managers/#{@current_user.id}") %>
+                  </li>
+                <% when "school" %>
+                  <li>
+                    <%= link_to(@current_user.name, "/schools/#{@current_user.id}") %>
+                  </li>
+                <% when "teacher" %>
+                  <li>
+                    <%= link_to(@current_user.name, "/teachers/#{@current_user.id}") %>
+                  </li>
+                <% when "family" %>
+                  <li>
+                    <%= link_to(@current_user.name, "/families/#{@current_user.id}") %>
+                  </li>
+                <% when "student" %>
+                  <li>
+                    <%= link_to(@current_user.name, "/students/#{@current_user.id}") %>
+                  </li>
+              <% end %>
+              
+              <li>
+                <%= link_to("ダッシュボード", "/dashboard") %>
+              </li>
+
+              <% if session[:user_type] == "manager" then %>
                 <li>
                   <%= link_to("塾管理", "/schools") %>
                 </li>
-                <li>
-                  <%= link_to("ログアウト", "/logout", data: { turbo_method: :post }) %>
-                </li>
-              </ul>
-            <% end %>
-            
-            <% if session[:user_type] == "school" %>
-              <ul>
-                <li>
-                  <%= link_to(@current_user.name, "/schools/#{@current_user.id}") %>
-                </li>
-                <li>
-                  <%= link_to("ダッシュボード", "/schools/#{@current_user.id}/dashboard") %>
-                </li>
+              <% end %>
+
+              <% if session[:user_type] == "manager" || session[:user_type] == "school" then %>
                 <li>
                   <%= link_to("講師管理", "/teachers") %>
                 </li>
+              <% end %>
+
+              <% if session[:user_type] == "manager" || session[:user_type] == "school" || session[:user_type] == "teacher" then %>
                 <li>
                   <%= link_to("生徒管理", "/students") %>
                 </li>
@@ -87,77 +92,27 @@
                   <%= link_to("授業管理", "/lessons") %>
                 </li>
                 <li>
-                  <%= link_to("授業報告書", "/schools/#{@current_user.id}/report") %>
+                  <%= link_to("給与明細", "/payslip") %>
                 </li>
+              <% end %>
+
+              <% if session[:user_type] == "manager" || session[:user_type] == "school" || session[:user_type] == "teacher" || session[:user_type] == "family" then %>
                 <li>
-                  <%= link_to("給与明細", "/schools/#{@current_user.id}/payslip") %>
+                  <%= link_to("授業報告書", "/report") %>
                 </li>
-                <li>
-                  <%= link_to("ログアウト", "/logout") %>
-                </li>
-              </ul>
-            <% end %>
-        
-            <% if session[:user_type] == "teacher" %>
-              <ul>
-                <li>
-                  <%= link_to(@current_user.name, "/teachers/#{@current_user.id}") %>
-                </li>
-                <li>
-                  <%= link_to("ダッシュボード", "/teachers/#{@current_user.id}/dashboard") %>
-                </li>
-                <li>
-                  <%= link_to("講師管理", "/teachers") %>
-                </li>
-                <li>
-                  <%= link_to("生徒管理", "/students") %>
-                </li>
-                <li>
-                  <%= link_to("授業管理", "/lessons") %>
-                </li>
-                <li>
-                  <%= link_to("授業報告書", "/schools/#{@current_user.school_id}/report") %>
-                </li>
-                <li>
-                  <%= link_to("給与明細", "/schools/#{@current_user.school_id}/payslip") %>
-                </li>
-                <li>
-                  <%= link_to("ログアウト", "/logout", data: { turbo_method: :post }) %>
-                </li>
-              </ul>
-            <% end %>
-            
-            <% if session[:user_type] == "student" %>
-              <ul>
-                <li>
-                  <%= link_to(@current_user.name, "/students/#{@current_user.id}") %>
-                </li>
-                <li>
-                  <%= link_to("ダッシュボード", "/teachers/#{@current_user.id}/dashboard") %>
-                </li>
-                <li>
-                  <%= link_to("講師管理", "/teachers") %>
-                </li>
-                <li>
-                  <%= link_to("生徒管理", "/students") %>
-                </li>
-                <li>
-                  <%= link_to("授業管理", "/lessons") %>
-                </li>
-                <li>
-                  <%= link_to("授業報告書", "/schools/#{@current_user.school_id}/report") %>
-                </li>
-                <li>
-                  <%= link_to("ログアウト", "/logout", data: { turbo_method: :post }) %>
-                </li>
-              </ul>
-            <% end %>
+              <% end %>
+
+              <li>
+                <%= link_to("ログアウト", "/logout") %>
+              </li>
+            </ul>
           </div>
         <% end %>
         
         <div class="content">
           <%= yield %>
         </div>
+        
       </div>
     </div>
   </body>

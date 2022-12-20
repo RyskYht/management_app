@@ -3,7 +3,7 @@ class AnnouncementsController < ApplicationController
 
   # GET /announcements or /announcements.json
   def index
-    @announcements = Announcement.all
+    @announcements = Announcement.where(school_id: get_school_id)
   end
 
   # GET /announcements/1 or /announcements/1.json
@@ -23,38 +23,26 @@ class AnnouncementsController < ApplicationController
   def create
     @announcement = Announcement.new(announcement_params)
 
-    respond_to do |format|
-      if @announcement.save
-        format.html { redirect_to announcement_url(@announcement), notice: "Announcement was successfully created." }
-        format.json { render :show, status: :created, location: @announcement }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @announcement.errors, status: :unprocessable_entity }
-      end
+    if @announcement.save
+      redirect_to announcements_url, notice: "登録が完了しました。"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /announcements/1 or /announcements/1.json
   def update
-    respond_to do |format|
-      if @announcement.update(announcement_params)
-        format.html { redirect_to announcement_url(@announcement), notice: "Announcement was successfully updated." }
-        format.json { render :show, status: :ok, location: @announcement }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @announcement.errors, status: :unprocessable_entity }
-      end
+    if @announcement.update(announcement_params)
+      redirect_to announcements_url, notice: "情報を編集しました"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /announcements/1 or /announcements/1.json
   def destroy
     @announcement.destroy
-
-    respond_to do |format|
-      format.html { redirect_to announcements_url, notice: "Announcement was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to announcements_url, notice: "削除しました。"
   end
 
   private

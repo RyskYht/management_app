@@ -3,9 +3,7 @@ class TeachersController < ApplicationController
 
   # GET /teachers or /teachers.json
   def index
-    if session[:user_type] == "school"
-      @teachers = Teacher.where(school_id: session[:user_id])
-    end
+    @teachers = Teacher.where(school_id: get_school_id)
   end
 
   # GET /teachers/1 or /teachers/1.json

@@ -5,6 +5,12 @@ class ManagersController < ApplicationController
   def index
     @managers = Manager.all
   end
+  
+  def manager_login
+      session[:user_id] = params[:id]
+      session[:user_type] = "manager"
+      redirect_to "/dashboard", notice: "ログインしました"
+  end
 
   # GET /managers/1 or /managers/1.json
   def show

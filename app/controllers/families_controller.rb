@@ -3,9 +3,7 @@ class FamiliesController < ApplicationController
 
   # GET /families or /families.json
   def index
-    if session[:user_type] == "school"
-      @families = Family.where(school_id: session[:user_id])
-    end
+    @families = Family.where(school_id: get_school_id)
   end
 
   # GET /families/1 or /families/1.json

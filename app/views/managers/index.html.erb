@@ -1,14 +1,22 @@
-<p style="color: green"><%= notice %></p>
+<%= link_to "新規登録", new_manager_path %>
 
-<h1>Managers</h1>
 
-<div id="managers">
-  <% @managers.each do |manager| %>
-    <%= render manager %>
-    <p>
-      <%= link_to "Show this manager", manager %>
-    </p>
-  <% end %>
+<div class="container">
+  <h2>経営者一覧</h1>
+  <table>
+    <tr>
+      <th>ログインID</th>
+      <th>ログイン</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+    <% @managers.each do |manager| %>
+      <tr>
+        <td><%= manager.login_id %></td>
+        <td><%= button_to "ログイン", "/managers/#{manager.id}/login", method: :post %></td>
+        <td><%= button_to edit_manager_path(manager), method: :get do %><i class="fa-regular fa-pen-to-square"></i><% end %></td>
+        <td><%= button_to manager, method: :delete do %><i class="fa-regular fa-trash-can"></i><% end %></td>
+      </tr>
+    <% end %>
+  </table>
 </div>
-
-<%= link_to "New manager", new_manager_path %>

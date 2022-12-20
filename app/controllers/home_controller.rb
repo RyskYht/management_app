@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :set_current_user, only: %i[ dashboard ]
+  
   def top
   end
 
@@ -13,10 +15,10 @@ class HomeController < ApplicationController
         @user = School.find_by(login_id: params[:login_id])
       when "teacher"
         @user = Teacher.find_by(login_id: params[:login_id])
-      when "student"
-        @user = Student.find_by(login_id: params[:login_id])
       when "family"
         @user = Family.find_by(login_id: params[:login_id])
+      when "student"
+        @user = Student.find_by(login_id: params[:login_id])
     end
       
     if @user && @user.authenticate(params[:password])
@@ -30,7 +32,6 @@ class HomeController < ApplicationController
       session[:user_id] = nil
       session[:user_type] = nil
       render :login_form
-      
     end
   end
 
@@ -41,17 +42,5 @@ class HomeController < ApplicationController
   end
   
   def dashboard
-    case session[:user_type]
-      when "manager"
-        @user = Manager.find_by(session[:user_id])
-      when "school"
-        @user = School.find_by(session[:user_id])
-      when "teacher"
-        @user = Teacher.find_by(session[:user_id])
-      when "student"
-        @user = Student.find_by(session[:user_id])
-      when "family"
-        @user = Family.find_by(session[:user_id])
-    end
   end
 end

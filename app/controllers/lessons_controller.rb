@@ -3,7 +3,7 @@ class LessonsController < ApplicationController
 
   # GET /lessons or /lessons.json
   def index
-    @lessons = Lesson.all
+    @lessons = Lesson.where(school_id: get_school_id)
   end
 
   # GET /lessons/1 or /lessons/1.json
@@ -13,6 +13,8 @@ class LessonsController < ApplicationController
   # GET /lessons/new
   def new
     @lesson = Lesson.new
+    @lessonteacher = Lesson_Teacher.new
+    @lessonstudent = Lesson_Student.new
   end
 
   # GET /lessons/1/edit
@@ -22,39 +24,29 @@ class LessonsController < ApplicationController
   # POST /lessons or /lessons.json
   def create
     @lesson = Lesson.new(lesson_params)
+    @lessonteacher = Lesson_Teacher.new(lessonteacher_params)
+    @lessonstudent = Lesson_Student.new(lessonstudent_params)
 
-    respond_to do |format|
-      if @lesson.save
-        format.html { redirect_to lesson_url(@lesson), notice: "Lesson was successfully created." }
-        format.json { render :show, status: :created, location: @lesson }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @lesson.errors, status: :unprocessable_entity }
-      end
+    if @lesson.save && @lessonteacher.save && @lessonstudent.save
+      redirect_to lessons_url, notice: "登録が完了しました。"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /lessons/1 or /lessons/1.json
   def update
-    respond_to do |format|
-      if @lesson.update(lesson_params)
-        format.html { redirect_to lesson_url(@lesson), notice: "Lesson was successfully updated." }
-        format.json { render :show, status: :ok, location: @lesson }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @lesson.errors, status: :unprocessable_entity }
-      end
+    if @lesson.update(lesson_params) && @lessonteacher.update(lessonteacher_params) && @lessonstudent.update(lessonstudent_params)
+      redirect_to lessons_url, notice: "情報を編集しました"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /lessons/1 or /lessons/1.json
   def destroy
     @lesson.destroy
-
-    respond_to do |format|
-      format.html { redirect_to lessons_url, notice: "Lesson was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to lessons_url, notice: "削除しました。"
   end
 
   private
@@ -66,5 +58,13 @@ class LessonsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def lesson_params
       params.require(:lesson).permit(:school_id, :room_id, :name, :start, :end, :content, :hourly_pay, :monthly_pay, :month)
+    end
+
+    def lessonteacher_params
+      params.require(:lessonteacher).permit(:techer_ids[])
+    end
+
+    def lessonstudent_params
+      params.require(:lessonstudent).permit(:student_ids[])
     end
 end
