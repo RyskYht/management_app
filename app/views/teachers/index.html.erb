@@ -1,14 +1,30 @@
-<p style="color: green"><%= notice %></p>
+<%= link_to "新規登録", new_teacher_path %>
 
-<h1>Teachers</h1>
 
-<div id="teachers">
-  <% @teachers.each do |teacher| %>
-    <%= render teacher %>
-    <p>
-      <%= link_to "Show this teacher", teacher %>
-    </p>
-  <% end %>
+<div class="container">
+  <h2>塾一覧</h1>
+  <table>
+    <tr>
+      <th>ログインID</th>
+      <th>氏名</th>
+      <th>メールアドレス</th>
+      <th>住所</th>
+      <th>電話番号</th>
+      <th>生年月日</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+    <% @teachers.each do |teacher| %>
+      <tr>
+        <td><%= teacher.login_id %></td>
+        <td><%= teacher.name %></td>
+        <td><%= teacher.email %></td>
+        <td><%= teacher.address %></td>
+        <td><%= teacher.tel %></td>
+        <td><%= teacher.birthday %></td>
+        <td><%= button_to edit_teacher_path(teacher), method: :get do %><i class="fa-regular fa-pen-to-square"></i><% end %></td>
+        <td><%= button_to teacher, method: :delete do %><i class="fa-regular fa-trash-can"></i><% end %></td>
+      </tr>
+    <% end %>
+  </table>
 </div>
-
-<%= link_to "New teacher", new_teacher_path %>

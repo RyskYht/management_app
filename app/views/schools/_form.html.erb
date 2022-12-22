@@ -1,52 +1,46 @@
-<%= form_with(model: school) do |form| %>
-  <% if school.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(school.errors.count, "error") %> prohibited this school from being saved:</h2>
-
-      <ul>
-        <% school.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.label :manager_id, style: "display: block" %>
-    <%= form.text_field :manager_id %>
+<% @school.errors.full_messages.each do |message| %>
+  <div class="form-error">
+    <%= message %>
   </div>
+<% end %>
 
-  <div>
-    <%= form.label :login_id, style: "display: block" %>
-    <%= form.text_field :login_id %>
-  </div>
-
-  <div>
-    <%= form.label :password, style: "display: block" %>
-    <%= form.text_field :password %>
-  </div>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
+<%= form_with(model: school) do |f| %>
+  <%= f.hidden_field :manager_id, value: @current_user.id %>
+  <li>
+    <%= f.label :login_id, "ログインID（半角英数）" %>
+  </li>
+  <li>
+    <%= f.text_field :login_id, value: @school.login_id %>
+  </li>
+  <li>
+    <%= f.label :password, "パスワード（半角英数）" %>
+  </li>
+  <li>
+    <%= f.password_field :password, value: @school.password %>
+  </li>
+  <li>
+    <%= f.label :name, "塾名" %>
+  </li>
+  <li>
     <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div>
-    <%= form.label :address, style: "display: block" %>
+  </li>
+  <li>
+    <%= f.label :email, "メールアドレス" %>
+  </li>
+  <li>
+    <%= form.email_field :email %>
+  </li>
+  <li>
+    <%= f.label :address, "住所" %>
+  </li>
+  <li>
     <%= form.text_field :address %>
-  </div>
-
-  <div>
-    <%= form.label :tel, style: "display: block" %>
-    <%= form.text_field :tel %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+  </li>
+  <li>
+    <%= f.label :tel, "電話番号" %>
+  </li>
+  <li>
+    <%= form.telephone_field :tel %>
+  </li>
+  <%= f.submit "登録" %>
 <% end %>

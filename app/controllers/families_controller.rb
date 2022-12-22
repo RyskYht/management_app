@@ -3,10 +3,15 @@ class FamiliesController < ApplicationController
 
   # GET /families or /families.json
   def index
-    @families = Family.where(school_id: get_school_id)
+    if session[:user_type] == "school"
+      @families = Family.where(school_id: session[:user_id])
+    elsif session[:user_type] == "teacher"
+      @teacher = Teacher.find_by(session[:user_id])
+      @families = Family.where(school_id: @teacher.school_id)
+    end
   end
 
-  # GET /families/1 or /families/1.json
+  # GET /families/1
   def show
   end
 
@@ -15,11 +20,7 @@ class FamiliesController < ApplicationController
     @family = Family.new
   end
 
-  # GET /families/1/edit
-  def edit
-  end
-
-  # POST /families or /families.json
+  # POST /families
   def create
     @family = Family.new(family_params)
 
@@ -30,7 +31,11 @@ class FamiliesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /families/1 or /families/1.json
+  # GET /families/1/edit
+  def edit
+  end
+
+  # PATCH/PUT /families/1
   def update
     if @family.update(family_params)
       redirect_to families_url, notice: "情報を編集しました"
@@ -39,7 +44,7 @@ class FamiliesController < ApplicationController
     end
   end
 
-  # DELETE /families/1 or /families/1.json
+  # DELETE /families/1
   def destroy
     @family.destroy
     redirect_to families_url, notice: "削除しました。"

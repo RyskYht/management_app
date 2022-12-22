@@ -1,14 +1,30 @@
-<p style="color: green"><%= notice %></p>
+<%= link_to "新規登録", new_school_path %>
 
-<h1>Schools</h1>
 
-<div id="schools">
-  <% @schools.each do |school| %>
-    <%= render school %>
-    <p>
-      <%= link_to "Show this school", school %>
-    </p>
-  <% end %>
+<div class="container">
+  <h2>塾一覧</h1>
+  <table>
+    <tr>
+      <th>ログインID</th>
+      <th>ログイン</th>
+      <th>塾名</th>
+      <th>メールアドレス</th>
+      <th>住所</th>
+      <th>電話番号</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+    <% @schools.each do |school| %>
+      <tr>
+        <td><%= school.login_id %></td>
+        <td><%= button_to "ログイン", "/schools/#{school.id}/login", method: :post %></td>
+        <td><%= school.name %></td>
+        <td><%= school.email %></td>
+        <td><%= school.address %></td>
+        <td><%= school.tel %></td>
+        <td><%= button_to edit_school_path(school), method: :get do %><i class="fa-regular fa-pen-to-square"></i><% end %></td>
+        <td><%= button_to school, method: :delete do %><i class="fa-regular fa-trash-can"></i><% end %></td>
+      </tr>
+    <% end %>
+  </table>
 </div>
-
-<%= link_to "New school", new_school_path %>

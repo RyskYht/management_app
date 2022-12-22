@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get     "payslip", to: "home#payslip"
   
   post    "/managers/:id/login", to: "managers#manager_login"
+  post    "/schools/:id/login", to: "schools#school_login"
   
   get     "/students", to: "students#index"
   get     "/students/:family_id", to: "students#family_index"

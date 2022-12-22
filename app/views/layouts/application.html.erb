@@ -48,15 +48,15 @@
               <% case session[:user_type] %>
                 <% when "manager" %>
                   <li>
-                    <%= link_to("登録情報", "/managers/#{@current_user.id}") %>
+                    <%= link_to("登録情報", "/managers/#{@current_user.id}/edit") %>
                   </li>
                 <% when "school" %>
                   <li>
-                    <%= link_to(@current_user.name, "/schools/#{@current_user.id}") %>
+                    <%= link_to(@current_user.name, "/schools/#{@current_user.id}/edit") %>
                   </li>
                 <% when "teacher" %>
                   <li>
-                    <%= link_to(@current_user.name, "/teachers/#{@current_user.id}") %>
+                    <%= link_to(@current_user.name, "/teachers/#{@current_user.id}/edit") %>
                   </li>
                 <% when "family" %>
                   <li>
@@ -78,27 +78,30 @@
                 </li>
               <% end %>
 
-              <% if session[:user_type] == "manager" || session[:user_type] == "school" then %>
+              <% if session[:user_type] == "school" then %>
                 <li>
                   <%= link_to("講師管理", "/teachers") %>
                 </li>
               <% end %>
 
-              <% if session[:user_type] == "manager" || session[:user_type] == "school" || session[:user_type] == "teacher" then %>
+              <% if session[:user_type] == "school" || session[:user_type] == "teacher" then %>
                 <li>
                   <%= link_to("生徒管理", "/students") %>
                 </li>
                 <li>
                   <%= link_to("授業管理", "/lessons") %>
                 </li>
-                <li>
-                  <%= link_to("給与明細", "/payslip") %>
-                </li>
               <% end %>
 
               <% if session[:user_type] == "manager" || session[:user_type] == "school" || session[:user_type] == "teacher" || session[:user_type] == "family" then %>
                 <li>
                   <%= link_to("授業報告書", "/report") %>
+                </li>
+              <% end %>
+
+              <% if session[:user_type] == "manager" || session[:user_type] == "school" || session[:user_type] == "teacher" then %>
+                <li>
+                  <%= link_to("給与明細", "/payslip") %>
                 </li>
               <% end %>
 

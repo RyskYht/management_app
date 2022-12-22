@@ -1,29 +1,31 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: %i[ show edit update destroy ]
 
-  # GET /students or /students.json
+  # GET /students
   def index
-    @students = Student.where(school_id: get_school_id)
+    if session[:user_type] == "school"
+      @students = Student.where(school_id: session[:user_id])
+    elsif session[:user_type] == "teacher"
+      @teacher = Teacher.find_by(session[:user_id])
+      @students = Student.where(school_id: @teacher.school_id)
+    end
   end
   
+  # GET /students/1 Familyのindexにリンク
   def family_index
     @students = Student.where(family_id: params[:family_id])
   end
 
-  # GET /students/1 or /students/1.json
+  # GET /students/1/1
   def show
   end
 
-  # GET /students/new
+  # GET /students/1/new
   def new
     @student = Student.new
   end
 
-  # GET /students/1/edit
-  def edit
-  end
-
-  # POST /students or /students.json
+  # POST /students/1
   def create
     @student = Student.new(student_params)
 
@@ -34,7 +36,11 @@ class StudentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /students/1 or /students/1.json
+  # GET /students/1/1/edit
+  def edit
+  end
+
+  # PATCH/PUT /students/1/1
   def update
     if @student.update(teacher_params)
       redirect_to "/students", notice: "情報を編集しました"
@@ -43,7 +49,7 @@ class StudentsController < ApplicationController
     end
   end
 
-  # DELETE /students/1 or /students/1.json
+  # DELETE /students/1/1
   def destroy
     @student.destroy
     redirect_to "/students", notice: "削除しました。"

@@ -1,12 +1,17 @@
 class TeachersController < ApplicationController
   before_action :set_teacher, only: %i[ show edit update destroy ]
 
-  # GET /teachers or /teachers.json
+  # GET /teachers
   def index
-    @teachers = Teacher.where(school_id: get_school_id)
+    if session[:user_type] == "school"
+      @teachers = Teacher.where(school_id: session[:user_id])
+    elsif session[:user_type] == "teacher"
+      @teacher = Teacher.find_by(session[:user_id])
+      @teachers = Teacher.where(school_id: @teacher.school_id)
+    end
   end
 
-  # GET /teachers/1 or /teachers/1.json
+  # GET /teachers/1
   def show
   end
 
@@ -15,11 +20,7 @@ class TeachersController < ApplicationController
     @teacher = Teacher.new
   end
 
-  # GET /teachers/1/edit
-  def edit
-  end
-
-  # POST /teachers or /teachers.json
+  # POST /teachers
   def create
     @teacher = Teacher.new(teacher_params)
 
@@ -30,7 +31,11 @@ class TeachersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /teachers/1 or /teachers/1.json
+  # GET /teachers/1/edit
+  def edit
+  end
+
+  # PATCH/PUT /teachers/1
   def update
     if @teacher.update(teacher_params)
       redirect_to teachers_url, notice: "情報を編集しました"
@@ -39,7 +44,7 @@ class TeachersController < ApplicationController
     end
   end
 
-  # DELETE /teachers/1 or /teachers/1.json
+  # DELETE /teachers/1
   def destroy
     @teacher.destroy
     redirect_to teachers_url, notice: "削除しました。"
