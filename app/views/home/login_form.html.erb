@@ -1,36 +1,38 @@
-<div class="main users-new">
-  <div class="container">
-    <div class="form-heading">ログイン</div>
-    <div class="form users-form">
-      <div class="form-body">
-        <% if @error_message %>
-          <div class="form-error">
-            <%= @error_message %>
-          </div>
-        <% end %>
-        
-        <%= form_with url: "/login" do |f| %>
-          <li>
-            <%= f.label :user_type, "ユーザー種別" %>
-          </li>
-          <li>
-            <%= f.radio_button :user_type, "manager" %>経営者<%= f.radio_button :user_type, "school" %>塾<%= f.radio_button :user_type, "teacher" %>講師<%= f.radio_button :user_type, "student" %>生徒<%= f.radio_button :user_type, "family" %>保護者
-          </li>
-          <li>
-            <%= f.label :login_id, "ログインID" %>
-          </li>
-          <li>
-            <%= f.text_field :login_id, value: @login_id %>
-          </li>
-          <li>
-            <%= f.label :password, "パスワード" %>
-          </li>
-          <li>
-            <%= f.password_field :password, value: @password %>
-          </li>
-          <%= f.submit "ログイン" %>
-        <% end %>
-      </div>
+<div class="container">
+  <div class="form-heading">ログイン</div>
+  <div class="form users-form">
+    <div class="form-body">
+      <% if @error_message %>
+        <div class="form-error">
+          <%= @error_message %>
+        </div>
+      <% end %>
+      
+      <%= form_with url: "/login" do |f| %>
+        <li>
+          <%= f.label :user_type, "ユーザー種別" %>
+        </li>
+        <li>
+          <label><%= f.radio_button :user_type, "manager", :checked => ( params[:user_type] == "manager" ) %>経営者</label>
+          <label><%= f.radio_button :user_type, "school", :checked => ( params[:user_type] == "school" ) %>塾</label>
+          <label><%= f.radio_button :user_type, "teacher", :checked => ( params[:user_type] == "teacher" ) %>講師</label>
+          <label><%= f.radio_button :user_type, "student", :checked => ( params[:user_type] == "student" ) %>生徒</label>
+          <label><%= f.radio_button :user_type, "family", :checked => ( params[:user_type] == "family" ) %>保護者</label>
+        </li>
+        <li>
+          <%= f.label :login_id, "ログインID" %>
+        </li>
+        <li>
+          <%= f.text_field :login_id, value: params[:login_id] %>
+        </li>
+        <li>
+          <%= f.label :password, "パスワード" %>
+        </li>
+        <li>
+          <%= f.password_field :password, value: params[:password] %>
+        </li>
+        <%= f.submit "ログイン" %>
+      <% end %>
     </div>
   </div>
 </div>

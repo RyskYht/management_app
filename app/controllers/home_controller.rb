@@ -22,16 +22,18 @@ class HomeController < ApplicationController
     end
       
     if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      session[:user_type] = params[:user_type]
+        session[:user_id] = @user.id
+      if params[:login_id] == "admin"
+        session[:user_type] = "admin"
+      else
+        session[:user_type] = params[:user_type]
+      end
       redirect_to "/dashboard", notice: "ログインしました"
     else
       @error_message = "ログインIDまたはパスワードが間違っています"
-      @login_id = params[:login_id]
-      @password = params[:password]
       session[:user_id] = nil
       session[:user_type] = nil
-      render :login_form
+      render :login_form, status: :unprocessable_entity
     end
   end
 
@@ -43,4 +45,14 @@ class HomeController < ApplicationController
   
   def dashboard
   end
+
+  def report
+  end
+
+  def payslip
+  end
+
+  def sales
+  end
+
 end

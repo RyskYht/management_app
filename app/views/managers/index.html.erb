@@ -1,8 +1,6 @@
-<%= link_to "新規登録", new_manager_path %>
-
-
 <div class="container">
-  <h2>経営者一覧</h1>
+  <h2>経営者一覧</h2>
+  <%= button_to "新規登録", new_manager_path, method: :get %>
   <table>
     <tr>
       <th>ログインID</th>
@@ -15,7 +13,7 @@
         <td><%= manager.login_id %></td>
         <td><%= button_to "ログイン", "/managers/#{manager.id}/login", method: :post %></td>
         <td><%= button_to edit_manager_path(manager), method: :get do %><i class="fa-regular fa-pen-to-square"></i><% end %></td>
-        <td><%= button_to manager, method: :delete do %><i class="fa-regular fa-trash-can"></i><% end %></td>
+        <td><%= button_to manager, method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } do %><i class="fa-regular fa-trash-can"></i><% end %></td>
       </tr>
     <% end %>
   </table>

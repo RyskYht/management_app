@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get     "dashboard", to: "home#dashboard"
   get     "report", to: "home#report"
   get     "payslip", to: "home#payslip"
+  get     "sales", to: "home#sales"
   
   post    "/managers/:id/login", to: "managers#manager_login"
   post    "/schools/:id/login", to: "schools#school_login"

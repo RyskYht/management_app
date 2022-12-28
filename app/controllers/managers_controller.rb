@@ -16,9 +16,13 @@ class ManagersController < ApplicationController
     @manager = Manager.new(manager_params)
 
     if @manager.save
-      session[:user_type] = "manager"
-      session[:user_id] = @manager.id
-      redirect_to "/dashboard", notice: "登録が完了しました。ログイン状態です。"
+      if session[:user_type] = "admin"
+        redirect_to managers_path, notice: "登録が完了しました。"
+      else
+        session[:user_type] = "manager"
+        session[:user_id] = @manager.id
+        redirect_to "/dashboard", notice: "登録が完了しました。ログイン状態です。"
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -40,9 +44,13 @@ class ManagersController < ApplicationController
   # DELETE /managers/1
   def destroy
     @manager.destroy
-    session[:user_id] = nil
-    session[:user_type] = nil
-    redirect_to "/", notice: "削除しました。"
+    if session[:user_type] == "admin"
+      redirect_to managers_path, notice: "削除しました。"
+    elsif session[:user_type] == "manager"
+      session[:user_id] = nil
+      session[:user_type] = nil
+      redirect_to "/", notice: "削除しました。"
+    end
   end
 
   def manager_login
