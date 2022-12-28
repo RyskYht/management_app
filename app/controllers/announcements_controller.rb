@@ -55,4 +55,5 @@ class AnnouncementsController < ApplicationController
     def announcement_params
       params.require(:announcement).permit(:school_id, :start, :end, :title, :content)
     end
+    
 end
