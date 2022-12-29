@@ -2,5 +2,10 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 
-//= require jquery
+import jquery from "jquery"
+window.$ = jquery
 import "./custom/custom.js";
+
+$(function(){
+  alert("jQuery 動いた！")
+})
