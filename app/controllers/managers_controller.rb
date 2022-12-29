@@ -18,7 +18,7 @@ class ManagersController < ApplicationController
     if @manager.save
       if session[:user_type] == "admin"
         redirect_to managers_path, notice: "登録が完了しました。"
-      elsif params[:login_id] == "admin"
+      elsif @manager.login_id == "admin"
         session[:user_type] = "admin"
         session[:user_id] = @manager.id
         redirect_to "/dashboard", notice: "Admin登録が完了しました。ログイン状態です。"
