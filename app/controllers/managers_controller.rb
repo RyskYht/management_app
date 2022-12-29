@@ -16,8 +16,12 @@ class ManagersController < ApplicationController
     @manager = Manager.new(manager_params)
 
     if @manager.save
-      if session[:user_type] = "admin"
+      if session[:user_type] == "admin"
         redirect_to managers_path, notice: "登録が完了しました。"
+      elsif params[:login_id] == "admin"
+        session[:user_type] = "admin"
+        session[:user_id] = @manager.id
+        redirect_to "/dashboard", notice: "登録が完了しました。ログイン状態です。"
       else
         session[:user_type] = "manager"
         session[:user_id] = @manager.id
