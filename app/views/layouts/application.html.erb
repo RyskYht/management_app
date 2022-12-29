@@ -9,6 +9,7 @@
     <link rel = "stylesheet" type = "text/css" href = "http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css" >   
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="https://kit.fontawesome.com/a8bd3ff61c.js" crossorigin="anonymous"></script>
   </head>
 
@@ -152,11 +153,5 @@
         
       </div>
     </div>
-    
-    <script>
-      window.setTimeout(() => {
-        $(".flash").slideUp();
-      }, 1500);
-    </script>
   </body>
 </html>
