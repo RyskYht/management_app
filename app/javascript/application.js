@@ -6,13 +6,13 @@ import "controllers";
 import jquery from "jquery"
 window.$ = jquery
 
-$(document).addEventListener('turbolinks:load', function() {
+$(document).on('turbolinks:load', function() {
   setTimeout(function(){
     $('.flash').fadeOut(3000)
   },3000);
 });
 
-$(document).addEventListener('turbolinks:load', function() {
+$(document).on('turbolinks:load', function() {
   $(function(){
     alert("jQuery 動いた！")
   })
