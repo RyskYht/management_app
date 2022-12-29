@@ -12,3 +12,7 @@ $(document).on('turbolinks:load', function() {
     $('.flash').fadeOut(3000)
   },3000);
 });
+
+$(function(){
+  alert("jQuery 動いた！")
+})
