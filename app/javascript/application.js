@@ -8,5 +8,7 @@ import jquery from "jquery"
 window.$ = jquery
 
 $(function(){
-  setTimeout(function(){$('.flash').fadeOut(3000)}, 3000)
+  setTimeout(function(){
+    $('.flash').fadeOut(3000)
+  },3000);
 });
