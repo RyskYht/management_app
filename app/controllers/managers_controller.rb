@@ -21,7 +21,7 @@ class ManagersController < ApplicationController
       elsif params[:login_id] == "admin"
         session[:user_type] = "admin"
         session[:user_id] = @manager.id
-        redirect_to "/dashboard", notice: "登録が完了しました。ログイン状態です。"
+        redirect_to "/dashboard", notice: "Admin登録が完了しました。ログイン状態です。"
       else
         session[:user_type] = "manager"
         session[:user_id] = @manager.id
@@ -53,7 +53,7 @@ class ManagersController < ApplicationController
     elsif session[:user_type] == "manager"
       session[:user_id] = nil
       session[:user_type] = nil
-      redirect_to "/", notice: "削除しました。"
+      redirect_to "/", notice: "会員情報を削除しました。"
     end
   end
 
