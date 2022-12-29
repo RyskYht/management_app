@@ -230,6 +230,11 @@ button:hover, a.button:hover {
   font-size: 14px;
 }
 
+.flash.fadeout {
+  opacity: 0;
+  transition: 1s;
+}
+
 /* top */
 .top-message {
   text-align: center;
