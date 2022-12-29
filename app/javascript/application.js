@@ -7,7 +7,7 @@ import "controllers";
 import jquery from "jquery"
 window.$ = jquery
 
-$(function(){
+$(document).on('turbolinks:load', function() {
   setTimeout(function(){
     $('.flash').fadeOut(3000)
   },3000);
