@@ -23,7 +23,7 @@ class HomeController < ApplicationController
       
     if @user && @user.authenticate(params[:password])
         session[:user_id] = @user.id
-      if params[:login_id] == "admin"
+      if @user.login_id == "admin"
         session[:user_type] = "admin"
       else
         session[:user_type] = params[:user_type]
