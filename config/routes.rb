@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :managers, :schools, :teachers, :families, :rooms, :announcements, :lessons, :tasks, :tuitions
 
   get     "/", to: "home#top", as: "top"
-  get     "login", to: "home#login_form", as: "login"
+  get     "login", to: "home#login_form", as: "login_form"
   post    "login", to: "home#login", as: "login"
   get     "logout", to: "home#logout", as: "logout"
   get     "dashboard", to: "home#dashboard", as: "dashboard"
