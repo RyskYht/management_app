@@ -6,14 +6,16 @@ import "controllers";
 import jquery from "jquery"
 window.$ = jquery
 
-$(document).on('turbolinks:request-end', function() {
+$(document).on('turbo:road', function() {
   setTimeout(function(){
     $('.flash').fadeOut(3000)
   },3000);
 });
 
-$(document).on('turbolinks:request-end', function() {
-  $(function(){
-    alert("jQuery 動いた！")
-  })
+$(document).on('turbo:road', function() {
+  alert("jQuery 動いた！")
+});
+
+$(document).on('turbo:road', function() {
+  console.log("Hello Rails7!");
 });

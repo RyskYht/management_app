@@ -1,4 +1,5 @@
 class SchoolsController < ApplicationController
+  before_action :set_current_user
   before_action :set_school, only: %i[ show edit update destroy ]
 
   # GET /schools
@@ -8,10 +9,6 @@ class SchoolsController < ApplicationController
     elsif session[:user_type] == "manager"
       @schools = School.where(manager_id: session[:user_id])
     end
-  end
-
-  # GET /schools/1
-  def show
   end
 
   # GET /schools/new
@@ -24,7 +21,7 @@ class SchoolsController < ApplicationController
     @school = School.new(school_params)
 
     if @school.save
-      redirect_to schools_url, notice: "登録が完了しました。"
+      redirect_to schools_path, notice: "登録が完了しました。"
     else
       render :new, status: :unprocessable_entity
     end
@@ -37,7 +34,7 @@ class SchoolsController < ApplicationController
   # PATCH/PUT /schools/1
   def update
     if @school.update(school_params)
-      redirect_to schools_url, notice: "情報を編集しました"
+      redirect_to edit_school_path(params[:id]), notice: "情報を編集しました"
     else
       render :edit, status: :unprocessable_entity
     end

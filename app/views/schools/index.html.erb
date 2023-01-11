@@ -1,8 +1,6 @@
-<%= link_to "新規登録", new_school_path %>
-
-
 <div class="container">
   <h2>塾一覧</h1>
+  <%= button_to "新規登録", new_school_path, method: :get %>
   <table>
     <tr>
       <th>ログインID</th>
@@ -17,13 +15,13 @@
     <% @schools.each do |school| %>
       <tr>
         <td><%= school.login_id %></td>
-        <td><%= button_to "ログイン", "/schools/#{school.id}/login", method: :post %></td>
+        <td><%= button_to "/schools/#{school.id}/login", method: :post do %><i class="fa-solid fa-right-to-bracket"></i><% end %></td>
         <td><%= school.name %></td>
         <td><%= school.email %></td>
         <td><%= school.address %></td>
         <td><%= school.tel %></td>
         <td><%= button_to edit_school_path(school), method: :get do %><i class="fa-regular fa-pen-to-square"></i><% end %></td>
-        <td><%= button_to school, method: :delete do %><i class="fa-regular fa-trash-can"></i><% end %></td>
+        <td><%= button_to school, method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } do %><i class="fa-regular fa-trash-can"></i><% end %></td>
       </tr>
     <% end %>
   </table>

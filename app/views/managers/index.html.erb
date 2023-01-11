@@ -11,7 +11,7 @@
     <% @managers.each do |manager| %>
       <tr>
         <td><%= manager.login_id %></td>
-        <td><%= button_to "ログイン", "/managers/#{manager.id}/login", method: :post %></td>
+        <td><%= button_to "/managers/#{manager.id}/login", method: :post do %><i class="fa-solid fa-right-to-bracket"></i><% end %></td>
         <td><%= button_to edit_manager_path(manager), method: :get do %><i class="fa-regular fa-pen-to-square"></i><% end %></td>
         <td><%= button_to manager, method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } do %><i class="fa-regular fa-trash-can"></i><% end %></td>
       </tr>

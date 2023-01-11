@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
   resources :managers, :schools, :teachers, :families, :rooms, :announcements, :lessons, :tasks, :tuitions
 
-  get     "/", to: "home#top"
-  get     "login", to: "home#login_form"
-  post    "login", to: "home#login"
-  get     "logout", to: "home#logout"
-  get     "dashboard", to: "home#dashboard"
-  get     "report", to: "home#report"
-  get     "payslip", to: "home#payslip"
-  get     "sales", to: "home#sales"
+  get     "/", to: "home#top", as: "top"
+  get     "login", to: "home#login_form", as: "login"
+  post    "login", to: "home#login", as: "login"
+  get     "logout", to: "home#logout", as: "logout"
+  get     "dashboard", to: "home#dashboard", as: "dashboard"
+  get     "report", to: "home#report", as: "report"
+  get     "payslip", to: "home#payslip", as: "payslip"
+  get     "sales", to: "home#sales", as: "sales"
   
   post    "/managers/:id/login", to: "managers#manager_login"
   post    "/schools/:id/login", to: "schools#school_login"

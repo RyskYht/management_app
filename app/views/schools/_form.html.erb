@@ -1,46 +1,46 @@
-<% @school.errors.full_messages.each do |message| %>
+<% school.errors.full_messages.each do |message| %>
   <div class="form-error">
     <%= message %>
   </div>
 <% end %>
 
-<%= form_with(model: school) do |f| %>
+<%= form_with model: school do |f| %>
   <%= f.hidden_field :manager_id, value: @current_user.id %>
   <li>
     <%= f.label :login_id, "ログインID（半角英数）" %>
   </li>
   <li>
-    <%= f.text_field :login_id, value: @school.login_id %>
+    <%= f.text_field :login_id, value: school.login_id %>
   </li>
   <li>
     <%= f.label :password, "パスワード（半角英数）" %>
   </li>
   <li>
-    <%= f.password_field :password, value: @school.password %>
+    <%= f.password_field :password, value: school.password %>
   </li>
   <li>
     <%= f.label :name, "塾名" %>
   </li>
   <li>
-    <%= form.text_field :name %>
+    <%= f.text_field :name, value: school.name %>
   </li>
   <li>
     <%= f.label :email, "メールアドレス" %>
   </li>
   <li>
-    <%= form.email_field :email %>
+    <%= f.email_field :email, value: school.email %>
   </li>
   <li>
     <%= f.label :address, "住所" %>
   </li>
   <li>
-    <%= form.text_field :address %>
+    <%= f.text_field :address, value: school.address %>
   </li>
   <li>
     <%= f.label :tel, "電話番号" %>
   </li>
   <li>
-    <%= form.telephone_field :tel %>
+    <%= f.telephone_field :tel, value: school.tel %>
   </li>
   <%= f.submit "登録" %>
 <% end %>

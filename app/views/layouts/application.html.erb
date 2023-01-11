@@ -6,7 +6,6 @@
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link rel = "stylesheet" type = "text/css" href = "http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css" >   
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <script src="https://kit.fontawesome.com/a8bd3ff61c.js" crossorigin="anonymous"></script>
@@ -26,7 +25,7 @@
         <% if @current_user == nil %>
           <ul class="header-menus">
             <li>
-              <%= link_to("新規登録", "/managers/new") %>
+              <%= link_to("新規登録", new_manager_path ) %>
             </li>
             <li>
               <%= link_to("ログイン", "/login") %>
@@ -36,7 +35,7 @@
       </div>
   
       <% if flash[:notice] %>
-        <div class="flash"><%= flash[:notice] %></div>
+        <div class="flash"><%= flash[:notice].html_safe %></div>
       <% end %>
       
       <div class="main">
@@ -45,25 +44,25 @@
             <h2>メニュー</h2>
             <ul>
               <% case session[:user_type] %>
-                <% when "manager" %>
+                <% when "admin", "manager" %>
                   <li>
-                    <%= link_to("登録情報", "/managers/#{@current_user.id}/edit") %>
+                    <%= link_to("登録情報", edit_manager_path(@current_user.id) ) %>
                   </li>
                 <% when "school" %>
                   <li>
-                    <%= link_to(@current_user.name, "/schools/#{@current_user.id}/edit") %>
+                    <%= link_to(@current_user.name, edit_school_path(@current_user.id) ) %>
                   </li>
                 <% when "teacher" %>
                   <li>
-                    <%= link_to(@current_user.name, "/teachers/#{@current_user.id}/edit") %>
+                    <%= link_to(@current_user.name, edit_teacher_path(@current_user.id) ) %>
                   </li>
                 <% when "family" %>
                   <li>
-                    <%= link_to(@current_user.name, "/families/#{@current_user.id}") %>
+                    <%= link_to(@current_user.name, edit_family_path(@current_user.id) ) %>
                   </li>
                 <% when "student" %>
                   <li>
-                    <%= link_to(@current_user.name, "/students/#{@current_user.id}") %>
+                    <%= link_to(@current_user.name, edit_student_path(@current_user.id) ) %>
                   </li>
               <% end %>
               
@@ -73,72 +72,72 @@
 
               <% if session[:user_type] == "admin" then %>
                 <li>
-                  <%= link_to("経営者管理", "/managers") %>
+                  <%= link_to("経営者管理", managers_path ) %>
                 </li>
               <% end %>
 
               <% if session[:user_type] == "admin" || session[:user_type] == "manager" then %>
                 <li>
-                  <%= link_to("塾管理", "/schools") %>
+                  <%= link_to("塾管理", schools_path ) %>
                 </li>
               <% end %>
 
               <% if session[:user_type] == "school" then %>
                 <li>
-                  <%= link_to("講師管理", "/teachers") %>
+                  <%= link_to("講師管理", teachers_path ) %>
                 </li>
               <% end %>
 
               <% if session[:user_type] == "school" || session[:user_type] == "teacher" then %>
                 <li>
-                  <%= link_to("家族管理", "/families") %>
+                  <%= link_to("家族管理", families_path ) %>
                 </li>
                 <li>
-                  <%= link_to("生徒管理", "/students") %>
+                  <%= link_to("生徒管理", students_path ) %>
                 </li>
                 <li>
-                  <%= link_to("告知管理", "/announcements") %>
+                  <%= link_to("告知管理", announcements_path ) %>
                 </li>
               <% end %>
 
               <% if session[:user_type] == "school" then %>
                 <li>
-                  <%= link_to("教室管理", "/rooms") %>
+                  <%= link_to("教室管理", rooms_path ) %>
                 </li>
               <% end %>
 
               <% if session[:user_type] == "school" || session[:user_type] == "teacher" then %>
                 <li>
-                  <%= link_to("授業管理", "/lessons") %>
+                  <%= link_to("授業管理", lessons_path ) %>
                 </li>
                 <li>
-                  <%= link_to("課題管理", "/tasks") %>
+                  <%= link_to("課題管理", tasks_path ) %>
                 </li>
               <% end %>
 
               <% if session[:user_type] == "school" then %>
                 <li>
-                  <%= link_to("月謝管理", "/tuitions") %>
+                  <%= link_to("月謝管理", tuitions_path ) %>
                 </li>
                 <li>
-                  <%= link_to("指導報告書", "/report") %>
+                  <%= link_to("指導報告書", "/report" ) %>
                 </li>
               <% end %>
 
               <% if session[:user_type] == "manager" || session[:user_type] == "school" || session[:user_type] == "teacher" then %>
                 <li>
-                  <%= link_to("給料明細", "/payslip") %>
+                  <%= link_to("給料明細", "/payslip" ) %>
                 </li>
               <% end %>
 
               <% if session[:user_type] == "manager" || session[:user_type] == "school" then %>
                 <li>
-                  <%= link_to("売上明細", "/payslip") %>
+                  <%= link_to("売上明細", "/payslip" ) %>
                 </li>
               <% end %>
 
               <li>
-                <%= link_to("ログアウト", "/logout") %>
+                <%= link_to("ログアウト", "/logout" ) %>
               </li>
             </ul>
           </div>

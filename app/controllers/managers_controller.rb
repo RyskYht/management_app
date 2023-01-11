@@ -1,4 +1,5 @@
 class ManagersController < ApplicationController
+  before_action :set_current_user
   before_action :set_manager, only: %i[ edit update destroy ]
 
   # GET /managers
@@ -39,7 +40,7 @@ class ManagersController < ApplicationController
   # PATCH/PUT /managers/1
   def update
     if @manager.update(manager_params)
-      redirect_to @manager, notice: "情報を編集しました"
+      redirect_to edit_manager_path(params[:id]), notice: "情報を編集しました"
     else
       render :edit, status: :unprocessable_entity
     end
